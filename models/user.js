@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,13 +18,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator(i) {
-        return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/.test(i);
-      },
-      message: 'Неверная ссылка',
+      validator: (value) => validator.isURL(value),
+      message: 'Проверьте правильность введеной ссылки',
     },
   },
-
 });
 
 module.exports = mongoose.model('user', userSchema);
