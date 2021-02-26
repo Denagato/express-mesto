@@ -8,12 +8,11 @@ const getUsers = (req, res) => {
 
 const getProfile = (req, res) => {
   const { id } = req.params;
-  User.findOne({ id })
+  User.findById(id)
     .then((user) => {
       if (!user) {
         return res.status(404).send({ message: 'Нет пользователя с таким id' });
       }
-
       return res.status(200).send(user);
     })
     .catch((err) => {
